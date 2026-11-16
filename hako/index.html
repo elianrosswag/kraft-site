@@ -3,503 +3,361 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>HAKO — Landscapes, in modules.</title>
-<meta name="description" content="HAKO is a modular aquascape system: rock, soil and plants that click to one 50 mm grid. Build a planted aquarium in an hour. Rescape it in a day.">
+<title>HAKO · Landscapes, in modules.</title>
+<meta name="description" content="HAKO is a modular aquascape system: rock, soil and plants that lock to one 50 mm grid. Build a planted aquarium in an hour. Rescape it in a day.">
 <meta name="theme-color" content="#0e0f0e">
-<meta property="og:title" content="HAKO — Landscapes, in modules.">
-<meta property="og:description" content="Rock, soil and plants that click to one 50 mm grid. Build in an hour. Rescape in a day.">
+<meta property="og:title" content="HAKO · Landscapes, in modules.">
+<meta property="og:description" content="Rock, soil and plants that lock to one 50 mm grid. Build in an hour. Rescape in a day.">
 <meta property="og:image" content="https://elian.ink/hako/img/og.jpg">
 <meta property="og:url" content="https://elian.ink/hako/">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="img/mark.svg" type="image/svg+xml">
-<link rel="preload" href="fonts/Geist-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/host-grotesk-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="img/hero.webp" as="image">
 <style>
-@font-face{font-family:Geist;src:url(fonts/Geist-Regular.woff2) format("woff2");font-weight:400;font-display:swap}
-@font-face{font-family:Geist;src:url(fonts/Geist-Medium.woff2) format("woff2");font-weight:500;font-display:swap}
-@font-face{font-family:Geist;src:url(fonts/Geist-SemiBold.woff2) format("woff2");font-weight:600;font-display:swap}
-@font-face{font-family:"Geist Mono";src:url(fonts/GeistMono-Medium.woff2) format("woff2");font-weight:500;font-display:swap}
-@font-face{font-family:Doto;src:url(fonts/Doto-ExtraBold.woff2) format("woff2");font-weight:800;font-display:swap}
+@font-face{font-family:Host;src:url(fonts/host-grotesk-latin-400-normal.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:Host;src:url(fonts/host-grotesk-latin-500-normal.woff2) format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:Serif;src:url(fonts/instrument-serif-latin-400-italic.woff2) format("woff2");font-style:italic;font-display:swap}
+@font-face{font-family:Mono;src:url(fonts/martian-mono-latin-400-normal.woff2) format("woff2");font-display:swap}
 
 :root{
-  --ground:#0e0f0e;--raised:#171918;--sunken:#080908;--ink:#edede6;--ink-muted:#9a9d97;--ink-faint:#848881;
-  --line:#2a2d2a;--line-strong:#626661;--stone:#6e726c;--moss:#c6f24e;--on-moss:#0e0f0e;--moss-ink:#c6f24e;--signal:#ff7a1a;
-  --sans:Geist,system-ui,-apple-system,"Segoe UI",sans-serif;--mono:"Geist Mono",ui-monospace,Menlo,monospace;--dot:Doto,"Geist Mono",monospace;
-  --gut:clamp(16px,4vw,48px);--max:1320px;--sec:clamp(96px,14vw,192px);--cell:48px;
+  --basalt:#0e0f0e;--raised:#171918;--ink:#edede6;--muted:#9a9d97;--faint:#80847e;--line:#262826;--line2:#3a3d3a;
+  --paper:#f1f0eb;--paper2:#e7e6df;--pink:#121312;--pmuted:#5c5f5a;--pline:#d6d5ce;
+  --moss:#c6f24e;--on-moss:#0e0f0e;
+  --sans:Host,"Helvetica Neue",Arial,sans-serif;--serif:Serif,Georgia,serif;--mono:Mono,ui-monospace,Menlo,monospace;
+  --g:clamp(20px,3.6vw,56px);--max:1440px;
 }
-.paper{--ground:#f1f0eb;--raised:#fff;--sunken:#e7e6df;--ink:#121312;--ink-muted:#5c5f5a;--ink-faint:#6b6e68;--line:#d4d3cb;--line-strong:#83867f;--stone:#8a8d86;--moss-ink:#476b0c;--signal:#b94a00}
 *,*::before,*::after{box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{margin:0;background:#0e0f0e;color:var(--ink);font:400 17px/1.55 var(--sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
-section,header,footer{background:var(--ground);color:var(--ink)}
-img{display:block;max-width:100%}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:var(--basalt);color:var(--ink);font:400 18px/1.5 var(--sans);-webkit-font-smoothing:antialiased;font-feature-settings:"ss01","cv11"}
+img{display:block;max-width:100%;height:auto}
 a{color:inherit}
-h1,h2,h3,p,ul,ol,figure{margin:0}
-ul,ol{padding:0;list-style:none}
+h1,h2,h3,p,figure,ol,ul{margin:0}
+ol,ul{list-style:none;padding:0}
 ::selection{background:var(--moss);color:var(--on-moss)}
-:focus-visible{outline:2px solid var(--moss-ink);outline-offset:2px}
-.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gut)}
-.label{font:500 12px/16px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint)}
-.code{font:800 24px/1 var(--dot);letter-spacing:.02em;color:var(--ink)}
-.grid-bg{background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:var(--cell) var(--cell)}
+:focus-visible{outline:2px solid var(--moss);outline-offset:3px}
+.w{max-width:var(--max);margin:0 auto;padding:0 var(--g)}
+.m{font:400 11px/1.6 var(--mono);letter-spacing:.02em;text-transform:uppercase}
+.it{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:-.01em}
+.paper{background:var(--paper);color:var(--pink)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
 /* buttons */
-.btn{display:inline-flex;align-items:center;gap:10px;font:500 15px/1 var(--sans);height:48px;padding:0 24px;border-radius:999px;border:1px solid var(--line-strong);background:transparent;color:var(--ink);cursor:pointer;text-decoration:none;white-space:nowrap;transition:transform 240ms cubic-bezier(.2,.8,.2,1.2),background 200ms}
-.btn:hover{background:var(--raised)}
-.btn:active{transform:translateY(1px)}
-.btn-primary{background:var(--moss);border-color:var(--moss);color:var(--on-moss)}
-.btn-primary:hover{background:#d3f86c}
+.btn{display:inline-flex;align-items:center;gap:12px;height:52px;padding:0 26px;border-radius:999px;font:500 16px/1 var(--sans);letter-spacing:-.01em;text-decoration:none;border:1px solid currentColor;background:transparent;color:inherit;cursor:pointer;transition:background .25s,color .25s,transform .25s cubic-bezier(.2,.8,.2,1)}
+.btn:hover{transform:translateY(-1px)}
+.btn-moss{background:var(--moss);border-color:var(--moss);color:var(--on-moss)}
+.btn-moss:hover{background:#d4f975}
+.btn .ar{font-family:var(--mono);font-size:13px}
 
 /* nav */
-.nav{position:fixed;inset:0 0 auto 0;z-index:20;background:rgba(14,15,14,.82);backdrop-filter:saturate(1.2) blur(12px);-webkit-backdrop-filter:saturate(1.2) blur(12px);border-bottom:1px solid #1d1f1d}
-.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.nav{position:fixed;inset:0 0 auto;z-index:30;transition:background .3s,border-color .3s;border-bottom:1px solid transparent}
+.nav.solid{background:rgba(14,15,14,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-color:var(--line)}
+.nav .w{display:flex;align-items:center;justify-content:space-between;height:72px}
 .nav a{text-decoration:none}
-.wm-s{height:16px;width:auto;display:block;color:#edede6}
-.nav ul{display:flex;gap:28px;align-items:center}
-.nav ul a:not(.btn){font:500 12px/16px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#9a9d97}
-.nav ul a:not(.btn):hover{color:#edede6}
-.nav .btn{height:36px;padding:0 16px;font-size:14px}
-@media (max-width:760px){.nav ul li:not(:last-child){display:none}}
+.wm-s{display:block;height:15px;width:auto;color:var(--ink)}
+.nav ul{display:flex;gap:32px;align-items:center}
+.nav ul a:not(.btn){color:var(--muted);transition:color .2s}
+.nav ul a:not(.btn):hover{color:var(--ink)}
+.nav .btn{height:38px;padding:0 18px;font-size:14px}
+@media (max-width:820px){.nav ul li:not(:last-child){display:none}}
 
 /* hero */
-.hero{position:relative;min-height:100svh;padding-top:64px;overflow:hidden}
-.hero .wrap{position:relative;z-index:2;display:grid;grid-template-columns:1fr 1fr;gap:var(--gut);align-items:center;min-height:calc(100svh - 64px);padding-top:48px;padding-bottom:48px}
-.hero-copy{display:flex;flex-direction:column;gap:28px}
-.wm{width:100%;max-width:560px;height:auto;color:var(--ink)}
-.wm>*{opacity:0;animation:tile 560ms cubic-bezier(.2,.8,.2,1.15) forwards;animation-delay:calc(var(--i) * 14ms + 200ms);transform-box:fill-box;transform-origin:center}
-.wm .b{animation-name:bloom;animation-duration:1100ms;animation-delay:calc(var(--i) * 14ms + 1100ms)}
-@keyframes tile{from{opacity:0;transform:translateY(6px) scale(.86)}to{opacity:1;transform:none}}
-@keyframes bloom{0%{opacity:0;transform:scale(.6)}60%{opacity:1}100%{opacity:1;transform:none}}
-.hero h1{font:600 clamp(44px,6.4vw,92px)/.94 var(--sans);letter-spacing:-.045em;color:var(--ink)}
-.hero .lede{max-width:46ch;color:var(--ink-muted);font-size:clamp(17px,1.4vw,19px)}
-.cta{display:flex;gap:12px;flex-wrap:wrap}
-.specs{display:flex;flex-wrap:wrap;gap:8px 20px}
-.specs .label::before{content:"";display:inline-block;width:6px;height:6px;background:var(--ink-faint);margin-right:8px;vertical-align:1px}
-.stage{position:relative;height:min(78svh,720px);min-height:420px}
-.stage canvas{position:absolute;inset:0;width:100%!important;height:100%!important;display:block}
-.stage .tag{position:absolute;left:0;bottom:0;display:flex;flex-direction:column;gap:6px}
-.stage .hint{position:absolute;right:0;bottom:0}
-.hero::before{content:"";position:absolute;inset:0;background-image:linear-gradient(#1a1c1a 1px,transparent 1px),linear-gradient(90deg,#1a1c1a 1px,transparent 1px);background-size:48px 48px;mask-image:radial-gradient(ellipse 70% 60% at 70% 55%,#000 30%,transparent 75%);-webkit-mask-image:radial-gradient(ellipse 70% 60% at 70% 55%,#000 30%,transparent 75%)}
-@media (max-width:900px){.hero .wrap{grid-template-columns:1fr}.stage{height:60svh;min-height:360px}}
+.hero{position:relative;height:100svh;min-height:680px;overflow:hidden;background:var(--basalt)}
+.hero picture,.hero>img{position:absolute;inset:0}
+.hero .bg{width:100%;height:100%;object-fit:cover;object-position:68% 50%}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(14,15,14,.92) 0%,rgba(14,15,14,.55) 38%,rgba(14,15,14,0) 62%),linear-gradient(0deg,rgba(14,15,14,.85) 0%,rgba(14,15,14,0) 30%)}
+.hero .w{position:relative;z-index:2;height:100%;display:grid;grid-template-rows:auto 1fr auto;padding-top:104px;padding-bottom:40px}
+.corner{display:flex;justify-content:space-between;color:var(--faint)}
+.hero-main{align-self:end;display:flex;flex-direction:column;gap:30px;max-width:900px;padding-bottom:48px}
+.wm{width:min(520px,78vw);height:auto;color:var(--ink)}
+.wm>*{opacity:0;animation:tile .6s cubic-bezier(.2,.8,.2,1.1) forwards;animation-delay:calc(var(--i) * 12ms + 150ms);transform-box:fill-box;transform-origin:center}
+.wm .b{animation:bloom 1.2s cubic-bezier(.2,.8,.2,1) forwards;animation-delay:calc(var(--i) * 12ms + 1000ms)}
+@keyframes tile{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:none}}
+@keyframes bloom{from{opacity:0;transform:scale(.55) rotate(-8deg)}to{opacity:1;transform:none}}
+.hero h1{font:500 clamp(48px,6.6vw,104px)/.92 var(--sans);letter-spacing:-.045em}
+.hero h1 .it{font-size:1.07em;letter-spacing:-.02em}
+.hero p{max-width:44ch;color:var(--muted);font-size:clamp(17px,1.35vw,20px)}
+.hero .cta{display:flex;gap:12px;flex-wrap:wrap}
+.hero .foot{display:flex;justify-content:space-between;align-items:end;gap:24px;color:var(--faint);border-top:1px solid var(--line);padding-top:16px}
+.hero .foot b{font-weight:400;color:var(--ink)}
+@media (max-width:820px){.hero .bg{object-position:72% 40%}.hero::after{background:linear-gradient(0deg,rgba(14,15,14,.96) 0%,rgba(14,15,14,.7) 45%,rgba(14,15,14,.1) 75%)}.corner .r{display:none}.hero .foot span:last-child{display:none}}
 
-/* section scaffolding */
-.sec{padding:var(--sec) 0}
-.sec-head{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;margin-bottom:clamp(40px,6vw,80px)}
-.sec-head .label{grid-column:1 / span 3}
-.sec-head h2{grid-column:4 / span 9;font:500 clamp(36px,4.6vw,64px)/1 var(--sans);letter-spacing:-.035em}
-.sec-head p{grid-column:4 / span 6;color:var(--ink-muted);margin-top:20px}
-@media (max-width:760px){.sec-head{grid-template-columns:1fr}.sec-head .label,.sec-head h2,.sec-head p{grid-column:1}}
+/* statement */
+.state{padding:clamp(96px,13vw,200px) 0}
+.state .w{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--g)}
+.state .k{grid-column:1/span 3;color:var(--pmuted)}
+.state h2{grid-column:4/span 9;font:500 clamp(34px,4.4vw,68px)/1.02 var(--sans);letter-spacing:-.04em}
+.state h2 .it{font-size:1.06em}
+.state .cols{grid-column:4/span 9;display:grid;grid-template-columns:1fr 1fr;gap:var(--g);margin-top:clamp(40px,5vw,72px);color:var(--pmuted)}
+.state figure{grid-column:1/-1;margin-top:clamp(56px,7vw,112px);position:relative}
+.state figure img{width:100%;aspect-ratio:16/9;object-fit:cover;object-position:50% 58%}
+.state figcaption{display:flex;justify-content:space-between;margin-top:14px;color:var(--pmuted)}
+@media (max-width:820px){.state .w{grid-template-columns:1fr}.state .k,.state h2,.state .cols{grid-column:1}.state .cols{grid-template-columns:1fr}}
 
-/* render */
-.render{position:relative;border:1px solid var(--line);background:var(--raised)}
-.render img{width:100%;height:auto}
-.render figcaption{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:16px 20px;border-top:1px solid var(--line)}
-.chips{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-top:0}
-.chip{background:var(--ground);padding:24px 20px;display:flex;flex-direction:column;gap:10px}
-.chip .code{font-size:32px}
-@media (max-width:760px){.chips{grid-template-columns:repeat(2,1fr)}}
+/* system */
+.sys{padding:clamp(96px,12vw,180px) 0;background:var(--basalt)}
+.sys .w{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--g);align-items:start}
+.sys-head{grid-column:1/-1;display:grid;grid-template-columns:repeat(12,1fr);gap:var(--g);margin-bottom:clamp(48px,6vw,96px)}
+.sys-head .k{grid-column:1/span 3;color:var(--faint)}
+.sys-head h2{grid-column:4/span 9;font:500 clamp(40px,5.4vw,84px)/.96 var(--sans);letter-spacing:-.045em}
+.ex{grid-column:1/span 7;position:relative}
+.ex img{width:100%}
+.lab{position:absolute;display:flex;align-items:center;gap:12px;transform:translateY(-50%);white-space:nowrap;color:var(--ink)}
+.lab::before{content:"";width:clamp(24px,5vw,72px);height:1px;background:var(--line2)}
+.lab em{font-style:normal;color:var(--faint)}
+.plist{grid-column:9/span 4;position:sticky;top:120px;border-top:1px solid var(--line)}
+.plist li{display:grid;grid-template-columns:48px 1fr;gap:12px;padding:26px 0 30px;border-bottom:1px solid var(--line)}
+.plist .n{color:var(--faint);padding-top:6px}
+.plist h3{font:500 24px/1.15 var(--sans);letter-spacing:-.025em;margin-bottom:8px}
+.plist p{color:var(--muted);font-size:16px}
+@media (max-width:600px){.lab em{display:none}.nav .btn{height:34px;padding:0 14px;font-size:12px}}
+@media (max-width:900px){.sys .w,.sys-head{grid-template-columns:1fr}.sys-head .k,.sys-head h2,.ex,.plist{grid-column:1}.plist{position:static}.lab::before{width:16px}}
 
-/* exploded */
-.explode{display:grid;grid-template-columns:5fr 7fr;gap:var(--gut);align-items:center}
-.parts-list{display:flex;flex-direction:column;border-top:1px solid var(--line)}
-.parts-list li{display:grid;grid-template-columns:120px 1fr;gap:16px;padding:22px 0;border-bottom:1px solid var(--line);transition:opacity 300ms}
-.parts-list li h3{font:500 20px/1.2 var(--sans);letter-spacing:-.02em;margin-bottom:6px}
-.parts-list li p{color:var(--ink-muted);font-size:15px}
-.parts-list li.dim{opacity:.38}
-.xstage{position:relative;height:min(86svh,820px);min-height:520px}
-.xstage canvas{position:absolute;inset:0;width:100%!important;height:100%!important}
-.xlabel{position:absolute;display:flex;align-items:center;gap:10px;pointer-events:none;white-space:nowrap;transform:translate(0,-50%)}
-.xlabel::before{content:"";width:48px;height:1px;background:var(--line-strong)}
-.xlabel .code{font-size:18px}
-@media (max-width:900px){.explode{grid-template-columns:1fr}.xstage{height:70svh}}
+/* rescape */
+.res{padding:clamp(96px,12vw,180px) 0}
+.res .w>.head{display:flex;justify-content:space-between;align-items:end;gap:var(--g);margin-bottom:clamp(48px,6vw,88px);flex-wrap:wrap}
+.res h2{font:500 clamp(48px,7vw,120px)/.9 var(--sans);letter-spacing:-.05em}
+.res .head p{max-width:36ch;color:var(--pmuted)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--pink)}
+.step{padding:28px 32px 8px 0;border-right:1px solid var(--pline);display:flex;flex-direction:column;gap:18px}
+.step+.step{padding-left:32px}
+.step:last-child{border-right:0}
+.step .n{color:var(--pmuted)}
+.step h3{font:400 clamp(44px,4.4vw,72px)/1 var(--serif);font-style:italic;letter-spacing:-.02em}
+.step p{color:var(--pmuted);font-size:17px;max-width:34ch}
+@media (max-width:820px){.steps{grid-template-columns:1fr}.step,.step+.step{padding:28px 0;border-right:0;border-bottom:1px solid var(--pline)}}
 
-/* rescape steps */
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
-.step{background:var(--ground);padding:32px 28px 36px;display:flex;flex-direction:column;gap:14px}
-.step .code{font-size:40px}
-.step h3{font:500 24px/1.2 var(--sans);letter-spacing:-.02em}
-.step p{color:var(--ink-muted);font-size:16px}
-@media (max-width:760px){.steps{grid-template-columns:1fr}}
+/* parts bento */
+.parts{padding:0 0 clamp(96px,12vw,180px)}
+.parts .head{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--g);border-top:1px solid var(--pline);padding-top:28px;margin-bottom:clamp(40px,5vw,72px)}
+.parts .head .k{grid-column:1/span 3;color:var(--pmuted)}
+.parts .head h2{grid-column:4/span 6;font:500 clamp(36px,4.2vw,64px)/1 var(--sans);letter-spacing:-.04em}
+.parts .head p{grid-column:10/span 3;color:var(--pmuted);font-size:15px;align-self:end}
+.bento{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:clamp(220px,22vw,330px);gap:8px}
+.cell{position:relative;background:var(--paper2);border-radius:4px;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;padding:18px 20px;transition:background .3s}
+.cell:hover{background:#dfded6}
+.cell img{position:absolute;inset:14% 10% 18%;width:80%;height:68%;object-fit:contain;transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.cell:hover img{transform:translateY(-6px) scale(1.02)}
+.cell .top,.cell .bot{position:relative;z-index:1;display:flex;justify-content:space-between;gap:12px}
+.cell .top{color:var(--pmuted)}
+.cell h3{font:500 22px/1.1 var(--sans);letter-spacing:-.02em}
+.cell .bot .m{color:var(--pmuted);align-self:end}
+.c-big{grid-column:span 2;grid-row:span 2}
+.c-big img{inset:12% 14% 16%;width:72%;height:72%}
+.c-wide{grid-column:span 2}
+.c-wide img{inset:18% 12% 22%;width:76%;height:60%}
+.c-full{grid-column:1/-1}
+.c-full img{inset:20% 20% 24%;width:60%;height:56%}
+@media (max-width:900px){.bento{grid-template-columns:repeat(2,1fr);grid-auto-rows:240px}.parts .head{grid-template-columns:1fr}.parts .head .k,.parts .head h2,.parts .head p{grid-column:1}}
 
-/* catalogue */
-.cat{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
-.card{background:var(--ground);display:flex;flex-direction:column}
-.card .pic{aspect-ratio:4/3;background:var(--sunken);display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
-.card .pic::before{content:"";position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:24px 24px;opacity:.6}
-.card .pic img{position:relative;width:86%;height:86%;object-fit:contain}
-.card .meta{padding:20px 22px 26px;display:flex;flex-direction:column;gap:8px}
-.card h3{font:500 22px/1.2 var(--sans);letter-spacing:-.02em}
-@media (max-width:900px){.cat{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:560px){.cat{grid-template-columns:1fr}}
+/* kit */
+.kit{position:relative;background:var(--paper)}
+.kit img{width:100%}
+.kit .cap{padding:28px var(--g) 56px;display:flex;justify-content:space-between;align-items:end;gap:24px;color:var(--pmuted)}
+.kit .cap strong{display:block;text-transform:none;font:500 clamp(28px,3vw,44px)/1 var(--sans);letter-spacing:-.035em;color:var(--pink);margin-bottom:10px}
 
 /* numbers */
 .nums{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.num{padding:40px 24px;display:flex;flex-direction:column;gap:14px;border-right:1px solid var(--line)}
+.num{padding:clamp(28px,4vw,56px) var(--g);border-right:1px solid var(--line);display:flex;flex-direction:column;gap:18px}
 .num:last-child{border-right:0}
-.num .code{font-size:clamp(44px,5vw,72px)}
-@media (max-width:760px){.nums{grid-template-columns:repeat(2,1fr)}.num:nth-child(2){border-right:0}.num:nth-child(-n+2){border-bottom:1px solid var(--line)}}
-
-/* maker */
-.maker{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;align-items:start}
-.maker .label{grid-column:1 / span 3}
-.maker blockquote{grid-column:4 / span 8;margin:0;font:500 clamp(26px,3vw,40px)/1.15 var(--sans);letter-spacing:-.03em}
-.maker .by{grid-column:4 / span 8;display:flex;gap:16px;align-items:center;margin-top:28px;color:var(--ink-muted)}
-.maker .by .mk{width:40px;height:40px;color:var(--ink)}
-@media (max-width:760px){.maker{grid-template-columns:1fr}.maker .label,.maker blockquote,.maker .by{grid-column:1}}
+.num b{font:500 clamp(48px,5.4vw,88px)/.9 var(--sans);letter-spacing:-.05em}
+.num b .it{font-size:1.05em}
+.num span{color:var(--faint)}
+@media (max-width:820px){.nums{grid-template-columns:1fr 1fr}.num:nth-child(2){border-right:0}.num:nth-child(-n+2){border-bottom:1px solid var(--line)}}
 
 /* waitlist */
-.wait{text-align:left}
-.wait .box{border:1px solid var(--line);padding:clamp(28px,5vw,64px);display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,64px);align-items:end;background:var(--raised)}
-.wait h2{font:600 clamp(40px,5.4vw,80px)/.95 var(--sans);letter-spacing:-.045em}
-.wait p{color:var(--ink-muted);margin-top:18px;max-width:42ch}
-.wform{display:flex;flex-direction:column;gap:14px}
-.field{display:flex;align-items:center;gap:8px;background:var(--ground);border:1px solid var(--line-strong);border-radius:999px;padding:5px 5px 5px 22px}
-.field:focus-within{outline:2px solid var(--moss-ink);outline-offset:2px}
-.field input{flex:1;min-width:0;border:0;background:transparent;color:var(--ink);font:400 16px/1 var(--sans);outline:none;height:46px}
-.field input::placeholder{color:var(--ink-faint)}
-.wform .ok{display:none;color:var(--moss-ink)}
-.wform .err{display:none;color:var(--signal)}
-.wform.done .ok{display:block}.wform.done .field,.wform.done .hint{display:none}
-.wform.fail .err{display:block}
+.wait{padding:clamp(112px,14vw,220px) 0}
+.wait .w{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--g);align-items:end}
+.wait .k{grid-column:1/span 3;color:var(--faint);align-self:start}
+.wait h2{grid-column:4/span 9;font:500 clamp(56px,8.4vw,148px)/.88 var(--sans);letter-spacing:-.055em}
+.wait .sub{grid-column:4/span 4;color:var(--muted);margin-top:28px}
+.wf{grid-column:8/span 5;margin-top:28px;display:flex;flex-direction:column;gap:14px}
+.field{display:flex;align-items:center;gap:8px;border:1px solid var(--line2);border-radius:999px;padding:6px 6px 6px 24px;background:var(--raised);transition:border-color .2s}
+.field:focus-within{border-color:var(--moss)}
+.field input{flex:1;min-width:0;height:48px;border:0;background:transparent;color:var(--ink);font:400 17px/1 var(--sans);outline:none}
+.field input::placeholder{color:var(--faint)}
+.wf .ok,.wf .err{display:none}
+.wf .ok{color:var(--moss)}.wf .err{color:#ff7a1a}
+.wf.done .ok{display:block}.wf.done .field,.wf.done .hint{display:none}
+.wf.fail .err{display:block}
+.hint{color:var(--faint)}
 .hp{position:absolute;left:-9999px}
-@media (max-width:760px){.wait .box{grid-template-columns:1fr}}
+@media (max-width:900px){.wait .w{grid-template-columns:1fr}.wait .k,.wait h2,.wait .sub,.wf{grid-column:1}}
 
 /* footer */
-footer{border-top:1px solid var(--line);padding:40px 0 56px}
-footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
-footer .wm-s{height:14px}
-footer .row{display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+footer{border-top:1px solid var(--line);padding:32px 0 44px;color:var(--faint)}
+footer .w{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
+footer .row{display:flex;gap:28px;align-items:center;flex-wrap:wrap}
 footer a{text-decoration:none}
 footer a:hover{color:var(--ink)}
 
 /* reveal */
-.rv{opacity:0;transform:translateY(16px);transition:opacity 700ms ease,transform 700ms cubic-bezier(.2,.8,.2,1)}
+.rv{opacity:0;transform:translateY(24px);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.8,.2,1)}
 .rv.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){.wm>*,.wm .b{animation:none;opacity:1}.rv{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
 
-<nav class="nav" aria-label="Main">
-  <div class="wrap">
+<nav class="nav" id="nav" aria-label="Main">
+  <div class="w">
     <a href="#top" aria-label="HAKO home"><svg class="wm-s" viewBox="0 0 1164 356" fill="currentColor" fill-rule="evenodd" role="img" aria-label="HAKO"><path d="M0 0h44v44h-44Z M208 0h44v44h-44Z M0 52h44v44h-44Z M208 52h44v44h-44Z M0 104h44v44h-44Z M208 104h44v44h-44Z M0 156h44v44h-44Z M52 156h44v44h-44Z M104 156h44v44h-44Z M156 156h44v44h-44Z M208 156h44v44h-44Z M0 208h44v44h-44Z M208 208h44v44h-44Z M0 260h44v44h-44Z M208 260h44v44h-44Z M0 312h44v44h-44Z M208 312h44v44h-44Z M356 0h44v44h-44Z M408 0h44v44h-44Z M460 0h44v44h-44Z M304 52h44v44h-44Z M512 52h44v44h-44Z M304 104h44v44h-44Z M512 104H556V148H512Z M519.7 111.7V140.3H548.3V111.7Z M304 156h44v44h-44Z M356 156h44v44h-44Z M408 156h44v44h-44Z M460 156H504V200H460Z M467.7 163.7V192.3H496.3V163.7Z M512 156H556V200H512Z M519.7 163.7V192.3H548.3V163.7Z M304 208h44v44h-44Z M512 208H556V252H512Z M519.7 215.7V244.3H548.3V215.7Z M304 260h44v44h-44Z M512 260h44v44h-44Z M304 312h44v44h-44Z M512 312h44v44h-44Z M608 0h44v44h-44Z M816 0h44v44h-44Z M608 52h44v44h-44Z M764 52h44v44h-44Z M608 104H652V148H608Z M615.7 111.7V140.3H644.3V111.7Z M712 104H756V148H712Z M719.7 111.7V140.3H748.3V111.7Z M608 156H652V200H608Z M615.7 163.7V192.3H644.3V163.7Z M660 156H704V200H660Z M667.7 163.7V192.3H696.3V163.7Z M608 208H652V252H608Z M615.7 215.7V244.3H644.3V215.7Z M712 208H756V252H712Z M719.7 215.7V244.3H748.3V215.7Z M608 260h44v44h-44Z M764 260h44v44h-44Z M608 312h44v44h-44Z M816 312h44v44h-44Z M964 0h44v44h-44Z M1016 0h44v44h-44Z M1068 0h44v44h-44Z M912 52h44v44h-44Z M1120 52h44v44h-44Z M912 104h44v44h-44Z M1120 104h44v44h-44Z M912 156h44v44h-44Z M1120 156h44v44h-44Z M912 208h44v44h-44Z M1120 208h44v44h-44Z M912 260h44v44h-44Z M1120 260h44v44h-44Z M964 312h44v44h-44Z M1016 312h44v44h-44Z M1068 312h44v44h-44Z"/></svg></a>
-    <ul>
+    <ul class="m">
       <li><a href="#system">System</a></li>
       <li><a href="#rescape">Rescape</a></li>
       <li><a href="#parts">Parts</a></li>
-      <li><a class="btn btn-primary" href="#waitlist">Join the first build</a></li>
+      <li><a class="btn btn-moss" href="#waitlist">Join the first build</a></li>
     </ul>
   </div>
 </nav>
 
 <main id="top">
 <header class="hero">
-  <div class="wrap">
-    <div class="hero-copy">
-      <span class="label">Modular aquascape system · Prototype 03</span>
+  <img class="bg" src="img/hero.webp" width="2400" height="1800" alt="HAKO STONE-03, a faceted black cliff module with two plant sockets, standing on a grey soil tile.">
+  <div class="w">
+    <div class="corner m"><span>Modular aquascape system</span><span class="r">Prototype 04 · Made in the UK</span></div>
+    <div class="hero-main">
       <svg class="wm" viewBox="0 0 1164 356" fill="currentColor" fill-rule="evenodd" role="img" aria-label="HAKO"><rect style="--i:0" x="0" y="0" width="44" height="44"/><rect style="--i:1" x="208" y="0" width="44" height="44"/><rect style="--i:2" x="0" y="52" width="44" height="44"/><rect style="--i:3" x="208" y="52" width="44" height="44"/><rect style="--i:4" x="0" y="104" width="44" height="44"/><rect style="--i:5" x="208" y="104" width="44" height="44"/><rect style="--i:6" x="0" y="156" width="44" height="44"/><rect style="--i:7" x="52" y="156" width="44" height="44"/><rect style="--i:8" x="104" y="156" width="44" height="44"/><rect style="--i:9" x="156" y="156" width="44" height="44"/><rect style="--i:10" x="208" y="156" width="44" height="44"/><rect style="--i:11" x="0" y="208" width="44" height="44"/><rect style="--i:12" x="208" y="208" width="44" height="44"/><rect style="--i:13" x="0" y="260" width="44" height="44"/><rect style="--i:14" x="208" y="260" width="44" height="44"/><rect style="--i:15" x="0" y="312" width="44" height="44"/><rect style="--i:16" x="208" y="312" width="44" height="44"/><rect style="--i:17" x="356" y="0" width="44" height="44"/><rect style="--i:18" x="408" y="0" width="44" height="44"/><rect style="--i:19" x="460" y="0" width="44" height="44"/><rect style="--i:20" x="304" y="52" width="44" height="44"/><rect style="--i:21" x="512" y="52" width="44" height="44"/><rect style="--i:22" x="304" y="104" width="44" height="44"/><path class="b" style="--i:23" d="M512 104H556V148H512Z M515.5 107.5V144.5H552.5V107.5Z M523.00 127.02L522.00 126.63L520.77 125.00L519.79 118.00L517.00 113.56L517.00 109.00L519.15 109.00L522.00 112.12L524.00 116.15L526.00 122.23L526.32 124.00L525.62 126.00L523.00 127.02Z M550.00 142.18L538.90 142.00L537.21 136.00L532.00 131.28L530.77 129.00L530.64 126.00L532.44 121.00L532.56 119.00L527.34 109.00L532.75 109.00L535.80 115.00L537.00 116.36L539.00 117.14L546.00 118.18L548.00 118.99L548.97 120.00L549.42 122.00L548.00 124.04L546.00 124.32L541.00 122.01L538.00 121.56L536.11 123.00L535.40 126.00L536.46 129.00L539.00 130.84L541.00 130.85L546.00 129.23L550.00 129.44L550.00 134.29L547.00 133.83L544.00 134.23L542.61 135.00L542.01 137.00L542.83 139.00L544.00 140.07L550.00 141.56L550.00 142.18Z M550.00 112.86L542.96 111.00L539.62 109.00L550.00 109.00L550.00 112.86Z M532.00 142.10L526.73 142.00L523.00 137.67L517.00 134.55L517.00 129.66L521.05 131.00L526.26 134.00L530.00 138.17L532.00 142.10Z"/><rect style="--i:24" x="304" y="156" width="44" height="44"/><rect style="--i:25" x="356" y="156" width="44" height="44"/><rect style="--i:26" x="408" y="156" width="44" height="44"/><path class="b" style="--i:27" d="M460 156H504V200H460Z M463.5 159.5V196.5H500.5V159.5Z M496.00 194.03L481.25 194.00L479.30 189.00L478.38 188.00L472.13 186.00L470.00 184.12L468.00 179.44L467.82 176.00L471.50 168.00L470.53 165.00L468.03 161.00L474.24 161.00L475.05 164.00L476.25 166.00L482.00 168.47L486.00 171.78L488.00 172.12L490.00 171.58L492.06 170.00L492.79 168.00L492.51 166.00L491.00 164.16L485.00 163.25L481.82 161.00L495.82 161.00L497.78 168.00L497.06 172.00L494.00 174.56L487.51 177.00L483.68 187.00L484.61 190.00L486.14 192.00L489.00 193.45L491.00 193.28L492.22 192.00L492.77 190.00L492.66 187.00L491.60 183.00L491.78 181.00L493.00 179.53L494.00 179.25L496.00 179.79L497.37 182.00L497.65 188.00L497.22 191.00L496.00 194.03Z M479.14 183.00L480.37 182.00L481.45 180.00L482.45 177.00L482.25 175.00L480.00 172.71L478.00 171.73L476.00 171.52L473.56 174.00L472.74 177.00L472.89 179.00L475.00 182.12L477.00 183.07L479.14 183.00Z M474.00 194.01L469.00 194.35L467.74 194.00L467.72 193.00L469.00 190.96L471.00 190.53L473.00 191.71L474.00 194.01Z"/><path class="b" style="--i:28" d="M512 156H556V200H512Z M515.5 159.5V196.5H552.5V159.5Z M536.00 165.37L529.00 165.93L523.00 165.69L521.00 164.79L519.88 162.00L520.25 161.00L522.00 161.00L530.00 161.56L535.00 161.00L539.01 161.00L538.17 164.00L536.00 165.37Z M550.00 174.93L547.00 171.77L544.82 168.00L544.25 164.00L545.00 161.00L549.23 161.00L549.11 165.00L550.28 170.00L550.00 174.93Z M549.00 194.14L544.79 194.00L545.64 190.00L545.39 188.00L544.00 186.43L542.00 185.78L540.00 186.37L538.53 188.00L538.17 190.00L538.87 194.00L538.00 194.26L533.94 194.00L534.45 191.00L534.00 189.92L532.00 188.54L526.12 188.00L521.00 186.72L519.00 187.05L517.00 188.31L517.00 184.00L518.46 182.00L518.94 180.00L518.62 178.00L517.00 175.00L517.00 169.27L520.00 172.32L522.00 173.03L536.00 171.19L540.19 172.00L542.53 175.00L545.00 182.41L548.00 184.29L550.00 184.02L550.12 189.00L549.00 194.14Z M537.12 184.00L538.55 183.00L539.44 181.00L538.73 178.00L537.00 176.37L535.00 176.04L525.00 177.09L523.15 178.00L522.50 179.00L522.43 181.00L523.00 181.98L525.00 183.14L535.00 184.49L537.12 184.00Z M524.00 194.14L521.25 194.00L523.00 193.57L524.87 194.00L524.00 194.14Z"/><rect style="--i:29" x="304" y="208" width="44" height="44"/><path class="b" style="--i:30" d="M512 208H556V252H512Z M515.5 211.5V248.5H552.5V211.5Z M517.00 228.02L517.00 226.00L517.00 213.00L528.84 213.00L526.00 214.42L521.00 215.47L519.03 217.00L518.28 220.00L519.36 224.00L519.30 226.00L518.75 227.00L517.00 228.02Z M542.00 246.22L537.19 246.00L540.32 240.00L540.73 238.00L537.91 232.00L536.35 225.00L535.00 223.44L534.00 223.23L531.00 224.67L529.42 228.00L529.40 231.00L532.17 235.00L533.29 238.00L532.84 241.00L530.69 245.00L529.90 246.00L528.00 246.31L517.00 246.00L518.18 245.00L525.75 243.00L527.68 241.00L528.24 239.00L527.25 236.00L525.00 235.01L517.00 238.40L517.00 233.26L524.00 230.45L525.09 228.00L525.75 223.00L527.00 221.01L534.00 218.40L536.71 213.00L538.00 213.00L542.23 213.00L539.74 218.00L539.31 220.00L543.53 233.00L545.00 234.53L546.00 234.74L550.00 233.65L550.29 235.00L550.00 238.62L545.83 240.00L542.70 246.00L542.00 246.22Z M550.00 228.01L548.00 226.83L547.14 224.00L547.80 216.00L549.00 213.43L550.00 213.00L550.39 226.00L550.00 228.01Z"/><rect style="--i:31" x="304" y="260" width="44" height="44"/><rect style="--i:32" x="512" y="260" width="44" height="44"/><rect style="--i:33" x="304" y="312" width="44" height="44"/><rect style="--i:34" x="512" y="312" width="44" height="44"/><rect style="--i:35" x="608" y="0" width="44" height="44"/><rect style="--i:36" x="816" y="0" width="44" height="44"/><rect style="--i:37" x="608" y="52" width="44" height="44"/><rect style="--i:38" x="764" y="52" width="44" height="44"/><path class="b" style="--i:39" d="M608 104H652V148H608Z M611.5 107.5V144.5H648.5V107.5Z M615.00 130.10L613.00 129.97L613.00 125.25L616.00 124.59L618.37 122.00L616.49 116.00L616.37 109.00L621.00 109.00L621.97 117.00L623.00 119.90L625.00 120.96L630.00 121.65L631.15 123.00L631.24 125.00L630.00 126.54L629.00 126.82L624.00 125.48L622.00 125.67L618.00 129.10L615.00 130.10Z M621.00 142.03L617.00 142.15L613.00 141.55L613.00 136.64L617.00 136.90L619.00 136.39L623.00 133.81L636.00 128.45L638.35 127.00L639.84 125.00L639.68 123.00L638.00 120.61L629.00 114.84L627.88 112.00L628.59 110.00L629.64 109.00L631.00 109.00L642.00 109.00L636.00 110.86L634.99 112.00L634.99 113.00L637.00 114.87L642.00 116.61L643.30 118.00L644.06 123.00L645.00 124.59L646.00 125.07L646.00 129.75L643.00 129.61L637.00 133.17L625.00 138.30L622.22 140.00L621.00 142.03Z M645.00 142.03L631.72 142.00L641.05 138.00L646.00 136.67L646.21 141.00L646.00 141.75L645.00 142.03Z"/><path class="b" style="--i:40" d="M712 104H756V148H712Z M715.5 107.5V144.5H752.5V107.5Z M723.00 122.13L721.00 121.97L719.19 121.00L717.00 117.95L717.00 109.00L722.06 109.00L720.02 112.00L719.54 114.00L721.00 116.22L724.00 117.12L726.00 116.39L727.34 115.00L729.01 109.00L735.06 109.00L733.38 112.00L731.98 117.00L730.64 119.00L727.24 121.00L723.00 122.13Z M750.00 131.80L745.18 129.00L741.00 125.28L738.33 122.00L737.53 119.00L738.00 116.76L740.30 114.00L743.00 112.70L748.00 111.72L750.00 110.34L750.00 116.78L748.00 116.10L746.00 116.37L744.00 117.45L743.05 119.00L743.37 121.00L744.10 122.00L750.00 126.38L750.00 131.80Z M735.00 142.20L729.44 142.00L730.91 140.00L734.70 137.00L735.09 136.00L734.00 132.84L733.00 131.81L731.00 131.04L728.00 131.64L724.75 134.00L722.64 142.00L717.36 142.00L719.29 137.00L719.43 135.00L719.00 133.94L717.00 132.00L717.00 127.04L720.00 128.98L722.00 129.50L729.48 126.00L733.00 125.85L736.10 128.00L740.00 134.39L745.00 135.43L746.67 137.00L746.79 139.00L745.00 140.76L739.00 140.02L735.00 142.20Z"/><path class="b" style="--i:41" d="M608 156H652V200H608Z M611.5 159.5V196.5H648.5V159.5Z M642.00 187.37L640.00 187.77L637.00 187.16L630.00 183.38L623.00 184.21L613.00 183.33L613.00 176.93L614.00 177.94L616.00 178.69L625.00 179.53L628.00 178.91L629.22 177.00L628.45 174.00L627.00 172.86L620.00 172.41L617.17 171.00L615.80 169.00L613.00 161.00L619.12 161.00L618.35 162.00L618.48 164.00L619.51 166.00L621.00 167.30L628.00 168.08L631.00 169.10L633.14 172.00L633.59 179.00L636.00 181.56L639.00 182.64L641.64 182.00L643.09 180.00L642.63 178.00L639.75 173.00L637.21 166.00L635.48 164.00L633.00 162.65L626.06 161.00L639.74 161.00L641.15 163.00L646.14 176.00L646.00 183.84L642.00 187.37Z M638.00 194.14L613.00 194.31L613.00 191.00L613.00 190.26L614.00 189.87L619.00 190.40L626.00 190.05L634.00 191.99L638.57 194.00L638.00 194.14Z M646.00 194.06L645.64 193.00L646.00 191.28L646.00 194.06Z"/><path class="b" style="--i:42" d="M660 156H704V200H660Z M663.5 159.5V196.5H700.5V159.5Z M697.00 177.38L694.00 177.98L692.00 177.57L687.00 173.72L685.00 172.82L677.00 174.48L669.00 174.37L665.00 176.42L665.00 172.00L666.76 169.00L666.32 167.00L665.00 165.67L665.00 161.00L668.00 161.57L672.00 161.00L679.35 161.00L678.00 162.13L672.00 164.32L670.29 166.00L670.12 168.00L670.70 169.00L674.00 170.02L680.00 169.23L683.00 168.11L684.18 166.00L684.48 161.00L689.10 161.00L688.64 167.00L688.96 169.00L690.60 171.00L693.00 172.35L696.00 172.59L698.00 171.95L698.26 176.00L698.00 176.96L697.00 177.38Z M698.00 165.04L696.00 163.55L694.65 161.00L698.29 161.00L698.00 165.04Z M689.00 194.04L684.51 194.00L684.52 187.00L684.00 186.00L682.00 184.66L678.00 184.64L669.00 186.25L666.00 187.95L665.00 189.87L665.00 182.60L671.00 180.96L678.48 180.00L682.66 180.00L686.00 180.69L687.96 182.00L689.01 184.00L689.00 194.04Z M698.00 194.26L694.51 194.00L694.45 192.00L695.20 186.00L696.00 184.60L698.00 183.01L698.00 194.26Z M679.00 194.30L671.33 194.00L674.83 191.00L677.00 190.36L678.99 191.00L679.73 192.00L679.85 194.00L679.00 194.30Z M665.00 194.13L665.00 192.71L665.54 194.00L665.00 194.13Z"/><path class="b" style="--i:43" d="M608 208H652V252H608Z M611.5 211.5V248.5H648.5V211.5Z M646.00 223.60L639.00 223.24L636.94 222.00L634.71 219.00L633.00 217.66L624.00 216.41L615.35 213.00L639.50 213.00L638.14 215.00L638.54 217.00L641.00 218.70L646.00 218.91L646.00 223.60Z M630.00 240.10L627.00 240.05L623.19 239.00L621.00 237.91L619.03 236.00L618.20 233.00L618.53 227.00L616.00 224.63L613.00 223.70L613.00 218.93L617.00 220.00L622.00 222.99L630.00 223.87L633.09 226.00L635.14 230.00L635.09 235.00L634.39 237.00L633.00 238.79L630.00 240.10Z M629.50 235.00L630.43 234.00L630.84 232.00L629.42 229.00L626.00 227.50L623.57 228.00L622.74 229.00L622.49 231.00L623.70 234.00L627.00 235.62L629.50 235.00Z M640.00 246.15L634.30 246.00L641.02 240.00L641.63 237.00L640.58 232.00L640.69 230.00L642.00 228.37L644.00 228.09L646.05 230.00L646.06 245.00L643.00 244.70L640.00 246.15Z M626.00 246.02L613.50 246.00L613.00 245.00L613.00 240.37L621.00 244.36L626.00 246.02Z"/><path class="b" style="--i:44" d="M712 208H756V252H712Z M715.5 211.5V248.5H752.5V211.5Z M739.00 226.07L737.00 226.40L734.00 225.26L731.00 224.88L719.00 225.27L717.00 226.05L717.00 213.00L721.59 213.00L718.80 215.00L717.37 218.00L718.00 220.22L720.00 220.99L727.00 220.36L733.00 220.48L734.92 219.00L735.98 213.00L740.96 213.00L739.51 219.00L740.21 224.00L739.00 226.07Z M730.00 214.18L728.00 214.32L724.44 213.00L729.00 213.00L731.51 213.00L730.00 214.18Z M747.00 232.34L745.00 232.80L744.00 232.36L743.08 231.00L742.97 229.00L747.29 223.00L746.50 217.00L746.87 215.00L748.33 213.00L750.00 213.00L750.05 227.00L748.31 231.00L747.00 232.34Z M741.00 246.11L736.38 246.00L738.46 241.00L737.45 239.00L733.00 236.59L727.00 235.49L725.00 236.00L723.84 237.00L723.21 239.00L723.54 241.00L725.00 242.34L730.37 243.00L731.46 244.00L731.88 246.00L730.00 246.40L717.00 246.24L717.00 244.95L719.40 242.00L718.63 236.00L719.07 234.00L720.00 232.79L722.00 231.77L730.00 231.02L736.00 232.50L741.00 236.37L746.00 236.80L747.43 239.00L747.00 240.69L743.00 243.17L741.00 246.11Z M750.00 246.12L749.54 246.00L750.00 245.66L750.00 246.12Z"/><rect style="--i:45" x="608" y="260" width="44" height="44"/><rect style="--i:46" x="764" y="260" width="44" height="44"/><rect style="--i:47" x="608" y="312" width="44" height="44"/><rect style="--i:48" x="816" y="312" width="44" height="44"/><rect style="--i:49" x="964" y="0" width="44" height="44"/><rect style="--i:50" x="1016" y="0" width="44" height="44"/><rect style="--i:51" x="1068" y="0" width="44" height="44"/><rect style="--i:52" x="912" y="52" width="44" height="44"/><rect style="--i:53" x="1120" y="52" width="44" height="44"/><rect style="--i:54" x="912" y="104" width="44" height="44"/><rect style="--i:55" x="1120" y="104" width="44" height="44"/><rect style="--i:56" x="912" y="156" width="44" height="44"/><rect style="--i:57" x="1120" y="156" width="44" height="44"/><rect style="--i:58" x="912" y="208" width="44" height="44"/><rect style="--i:59" x="1120" y="208" width="44" height="44"/><rect style="--i:60" x="912" y="260" width="44" height="44"/><rect style="--i:61" x="1120" y="260" width="44" height="44"/><rect style="--i:62" x="964" y="312" width="44" height="44"/><rect style="--i:63" x="1016" y="312" width="44" height="44"/><rect style="--i:64" x="1068" y="312" width="44" height="44"/></svg>
-      <h1>Landscapes, in modules.</h1>
-      <p class="lede">Rock, soil and plants that click to one 50&nbsp;mm grid. Build a planted aquarium in an hour. Pull it apart and build a different one, with every plant still rooted.</p>
-      <div class="cta">
-        <a class="btn btn-primary" href="#waitlist">Join the first build</a>
-        <a class="btn" href="#system">See the system</a>
-      </div>
-      <div class="specs">
-        <span class="label">50 mm grid</span><span class="label">Matte PETG</span><span class="label">Sinks on its own</span><span class="label">Nothing glued</span>
-      </div>
+      <h1>Landscapes, <span class="it">in modules.</span></h1>
+      <p>Rock, soil and plants that lock to one 50&nbsp;mm grid. Build a planted aquarium in an hour. Pull it apart and build another, with every plant still rooted.</p>
+      <div class="cta"><a class="btn btn-moss" href="#waitlist">Join the first build <span class="ar">→</span></a><a class="btn" href="#system">See the system</a></div>
     </div>
-    <div class="stage" id="hero-stage" aria-label="3D model of HAKO STONE-03, a cliff module, rotating">
-      <div class="tag"><span class="code">STONE-03</span><span class="label">Cliff · 2×2 · 2 pods · 1 moss pocket</span></div>
-      <span class="label hint">Drag to turn</span>
-    </div>
+    <div class="foot m"><span><b>STONE-03</b> · Cliff · 2×2 · 234 g</span><span>Matte PETG · Sinks on its own · Nothing glued</span></div>
   </div>
 </header>
 
-<section class="paper sec" aria-labelledby="h-build">
-  <div class="wrap">
-    <div class="sec-head rv">
-      <span class="label">01 · Build</span>
-      <h2 id="h-build">Build in an hour.</h2>
-      <p>A full iwagumi-style layout in a 60&nbsp;litre tank: seven by seven grid cells of carpet tiles, five stones and ten plant pods. No glue, no foam, no guessing where the rock will sit.</p>
+<section class="paper state" aria-labelledby="h-state">
+  <div class="w">
+    <span class="k m rv">01 · Why</span>
+    <h2 id="h-state" class="rv">Most aquascapes are built once and torn out a year later. <span class="it">HAKO is built to change.</span></h2>
+    <div class="cols rv">
+      <p>Every stone, soil tile and plant pod locks to the same 50&nbsp;mm grid. A layout takes an hour to build, and nothing is glued, foamed or wedged into place.</p>
+      <p>When you want something new, lift the pieces out and set them down again somewhere else. The plants stay in their own soil, so they keep growing instead of starting over.</p>
     </div>
-    <figure class="render rv">
-      <img src="img/scape.jpg" width="2000" height="1334" alt="A planted HAKO layout in a cube aquarium: dark faceted stones on a carpet of green, plants growing from pods in the stones and the floor.">
-      <figcaption><span class="label">Render · biOrb Cube 60 · 7×7 grid</span><span class="label">Prototype parts, stylised plants</span></figcaption>
+    <figure class="rv">
+      <img src="img/hero-paper.webp" width="2000" height="1500" loading="lazy" alt="The same cliff module on a pale background, showing its faceted strata and two sockets.">
+      <figcaption class="m"><span>STONE-03 · Cliff</span><span>Printed in matte PETG at 0.2 mm</span></figcaption>
     </figure>
-    <div class="chips rv">
-      <div class="chip"><span class="code">07×07</span><span class="label">Grid cells in a 40 cm cube</span></div>
-      <div class="chip"><span class="code">05</span><span class="label">Stone shapes, and growing</span></div>
-      <div class="chip"><span class="code">10</span><span class="label">Plant pods in this layout</span></div>
-      <div class="chip"><span class="code">00</span><span class="label">Grams of glue</span></div>
-    </div>
   </div>
 </section>
 
-<section class="sec" id="system" aria-labelledby="h-system">
-  <div class="wrap">
-    <div class="sec-head rv">
-      <span class="label">02 · System</span>
-      <h2 id="h-system">Every piece has a place.</h2>
-      <p>Four parts and one tool. Everything snaps to the same 50&nbsp;mm grid, so any pod fits any socket and any stone sits on any tile.</p>
+<section class="sys" id="system" aria-labelledby="h-sys">
+  <div class="w">
+    <div class="sys-head">
+      <span class="k m rv">02 · System</span>
+      <h2 id="h-sys" class="rv">Four parts. <span class="it">One grid.</span> Every piece has a place.</h2>
     </div>
-    <div class="explode">
-      <ol class="parts-list" id="parts-list">
-        <li data-part="pod"><span class="code">POD</span><div><h3>Plant pod</h3><p>A removable pot of soil. Drops into any tile or any stone socket, and lifts out with the roots intact.</p></div></li>
-        <li data-part="stone"><span class="code">STONE</span><div><h3>Stone</h3><p>Faceted rock with pod sockets and moss pockets. Hollow and flooded, so it sinks on its own.</p></div></li>
-        <li data-part="key"><span class="code">KEY</span><div><h3>Key</h3><p>One loose bow-tie joint for everything. It locates, it doesn't lock: grit and biofilm can't jam it.</p></div></li>
-        <li data-part="tile"><span class="code">TILE</span><div><h3>Tile</h3><p>A soil tray for carpet plants. Grow one big lawn, then lift out a single square without tearing the rest.</p></div></li>
-      </ol>
-      <div class="xstage" id="x-stage" aria-label="Exploded 3D view of a HAKO tile, keys, stone and pod">
-        <div class="xlabel" id="lb-pod"><span class="code">POD</span><span class="label">9 g</span></div>
-        <div class="xlabel" id="lb-stone"><span class="code">STONE-03</span><span class="label">2×2</span></div>
-        <div class="xlabel" id="lb-key"><span class="code">KEY</span><span class="label">×4</span></div>
-        <div class="xlabel" id="lb-tile"><span class="code">TILE</span><span class="label">2×2</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="paper sec" id="rescape" aria-labelledby="h-rescape">
-  <div class="wrap">
-    <div class="sec-head rv">
-      <span class="label">03 · Rescape</span>
-      <h2 id="h-rescape">Rescape in a day.</h2>
-      <p>Most aquascapes are built once and torn out a year later. HAKO is built to change: move the mountain, keep the moss.</p>
-    </div>
-    <figure class="render rv">
-      <img src="img/rescape.jpg" width="2000" height="1334" alt="A HAKO stone being lifted out of a cube aquarium mid-rescape, with a planted tile, a pod and keys laid out beside the tank.">
-      <figcaption><span class="label">Mid-rescape · stone lifted · tile out on the tool</span><span class="label">Render</span></figcaption>
+    <figure class="ex rv">
+      <img src="img/exploded.webp" width="1600" height="2000" loading="lazy" alt="Exploded view: a plant pod above a cliff stone, four keys below it, and a soil tile at the bottom.">
+      <span class="lab m" style="left:49%;top:6%">Pod <em>9 g</em></span>
+      <span class="lab m" style="left:74%;top:44%">Stone-03 <em>2×2</em></span>
+      <span class="lab m" style="left:71%;top:76%">Key <em>×4</em></span>
+      <span class="lab m" style="left:72%;top:90%">Tile <em>2×2</em></span>
     </figure>
-    <div class="steps rv" style="margin-top:1px">
-      <div class="step"><span class="code">01</span><h3>Lift.</h3><p>Slide the TOOL down any seam. It cuts the roots that cross it and levers the tile out, carpet and all.</p></div>
-      <div class="step"><span class="code">02</span><h3>Move.</h3><p>Stones lift straight off their keys. Put them anywhere on the grid: new ridge, new valley, same rocks.</p></div>
-      <div class="step"><span class="code">03</span><h3>Replant.</h3><p>Pods drop into any tile or any stone. The plant never leaves its soil, so nothing melts and nothing restarts.</p></div>
+    <ol class="plist">
+      <li class="rv"><span class="n m">01</span><div><h3>Pod</h3><p>A removable pot of soil. It drops into any tile or any stone socket, and lifts out with the roots intact.</p></div></li>
+      <li class="rv"><span class="n m">02</span><div><h3>Stone</h3><p>Faceted rock with pod sockets and moss pockets. Hollow and flooded, so it sinks on its own.</p></div></li>
+      <li class="rv"><span class="n m">03</span><div><h3>Key</h3><p>One loose bow-tie joint for everything. It locates rather than locks, so grit and biofilm can't jam it.</p></div></li>
+      <li class="rv"><span class="n m">04</span><div><h3>Tile</h3><p>A soil tray for carpet plants. Grow one big lawn, then lift out a single square without tearing the rest.</p></div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="paper res" id="rescape" aria-labelledby="h-res">
+  <div class="w">
+    <div class="head">
+      <h2 id="h-res" class="rv">Rescape <span class="it">in a day.</span></h2>
+      <p class="rv">Move the mountain, keep the moss. Three moves, one tool.</p>
+    </div>
+    <div class="steps">
+      <div class="step rv"><span class="n m">01 · Tool</span><h3>Lift.</h3><p>Slide the tool down any seam. It cuts the roots that cross it and levers the tile out, carpet and all.</p></div>
+      <div class="step rv"><span class="n m">02 · Stone</span><h3>Move.</h3><p>Stones lift straight off their keys. Set them anywhere on the grid: a new ridge, a new valley, the same rocks.</p></div>
+      <div class="step rv"><span class="n m">03 · Pod</span><h3>Replant.</h3><p>Pods drop into any tile or any stone. The plant never leaves its soil, so nothing melts and nothing restarts.</p></div>
     </div>
   </div>
 </section>
 
-<section class="sec" id="parts" aria-labelledby="h-parts">
-  <div class="wrap">
-    <div class="sec-head rv">
-      <span class="label">04 · Parts</span>
-      <h2 id="h-parts">The first set.</h2>
-      <p>Prototype geometry, printed and tested in the UK. Weights are today's; they drop with every version.</p>
+<section class="paper parts" id="parts" aria-labelledby="h-parts">
+  <div class="w">
+    <div class="head">
+      <span class="k m rv">03 · Parts</span>
+      <h2 id="h-parts" class="rv">The first set.</h2>
+      <p class="rv">Prototype 04. Printed and tested in the UK; weights drop with every version.</p>
     </div>
-    <div class="cat rv">
-      <article class="card"><div class="pic"><img src="img/p-boulder.webp" alt="" loading="lazy" width="800" height="600"></div><div class="meta"><span class="code">STONE-01</span><h3>Boulder</h3><span class="label">1×1 · 78 g</span></div></article>
-      <article class="card"><div class="pic"><img src="img/p-ledge.webp" alt="" loading="lazy" width="800" height="600"></div><div class="meta"><span class="code">STONE-02</span><h3>Ledge</h3><span class="label">1×2 · 1 pod · 116 g</span></div></article>
-      <article class="card"><div class="pic"><img src="img/p-cliff.webp" alt="" loading="lazy" width="800" height="600"></div><div class="meta"><span class="code">STONE-03</span><h3>Cliff</h3><span class="label">2×2 · 2 pods · 1 moss pocket · 359 g</span></div></article>
-      <article class="card"><div class="pic"><img src="img/p-backwall.webp" alt="" loading="lazy" width="800" height="600"></div><div class="meta"><span class="code">STONE-04</span><h3>Back wall</h3><span class="label">1×3 · 1 moss pocket · 245 g</span></div></article>
-      <article class="card"><div class="pic"><img src="img/p-mountain.webp" alt="" loading="lazy" width="800" height="600"></div><div class="meta"><span class="code">STONE-05</span><h3>Mountain</h3><span class="label">2×3 · 3 pods · 2 moss pockets · 526 g</span></div></article>
-      <article class="card"><div class="pic"><img src="img/p-tile.webp" alt="" loading="lazy" width="800" height="600"></div><div class="meta"><span class="code">TILE</span><h3>Tile</h3><span class="label">2×2 · 15 mm · 39 g</span></div></article>
-      <article class="card"><div class="pic"><img src="img/p-pod.webp" alt="" loading="lazy" width="800" height="600"></div><div class="meta"><span class="code">POD</span><h3>Plant pod</h3><span class="label">40 mm · 25 cm³ soil · 9 g</span></div></article>
-      <article class="card"><div class="pic"><img src="img/p-key.webp" alt="" loading="lazy" width="800" height="600"></div><div class="meta"><span class="code">KEY</span><h3>Key</h3><span class="label">Bow-tie joint · 0.7 mm play · 2 g</span></div></article>
-      <article class="card"><div class="pic"><img src="img/p-tool.webp" alt="" loading="lazy" width="800" height="600"></div><div class="meta"><span class="code">TOOL</span><h3>Scape tool</h3><span class="label">Blade + hook · 230 mm · 28 g</span></div></article>
+    <div class="bento">
+      <article class="cell c-big rv"><div class="top m"><span>Stone-05</span><span>2×3</span></div><img src="img/p-mountain.webp" alt="" loading="lazy" width="892" height="900"><div class="bot"><h3>Mountain</h3><span class="m">3 pods · 342 g</span></div></article>
+      <article class="cell rv"><div class="top m"><span>Stone-01</span><span>1×1</span></div><img src="img/p-boulder.webp" alt="" loading="lazy" width="863" height="900"><div class="bot"><h3>Boulder</h3><span class="m">77 g</span></div></article>
+      <article class="cell rv"><div class="top m"><span>Stone-02</span><span>1×2</span></div><img src="img/p-ledge.webp" alt="" loading="lazy" width="900" height="818"><div class="bot"><h3>Ledge</h3><span class="m">1 pod · 97 g</span></div></article>
+      <article class="cell rv"><div class="top m"><span>Stone-03</span><span>2×2</span></div><img src="img/p-cliff.webp" alt="" loading="lazy" width="678" height="900"><div class="bot"><h3>Cliff</h3><span class="m">2 pods · 234 g</span></div></article>
+      <article class="cell rv"><div class="top m"><span>Stone-04</span><span>1×3</span></div><img src="img/p-backwall.webp" alt="" loading="lazy" width="758" height="900"><div class="bot"><h3>Back wall</h3><span class="m">202 g</span></div></article>
+      <article class="cell c-wide rv"><div class="top m"><span>Tile</span><span>2×2</span></div><img src="img/p-tile.webp" alt="" loading="lazy" width="900" height="455"><div class="bot"><h3>Tile</h3><span class="m">15 mm · 39 g</span></div></article>
+      <article class="cell rv"><div class="top m"><span>Pod</span><span>40 mm</span></div><img src="img/p-pod.webp" alt="" loading="lazy" width="900" height="772"><div class="bot"><h3>Plant pod</h3><span class="m">25 cm³ soil</span></div></article>
+      <article class="cell rv"><div class="top m"><span>Key</span><span>×4</span></div><img src="img/p-key.webp" alt="" loading="lazy" width="618" height="900"><div class="bot"><h3>Key</h3><span class="m">0.7 mm play</span></div></article>
+      <article class="cell c-full rv"><div class="top m"><span>Tool</span><span>230 mm</span></div><img src="img/p-tool.webp" alt="" loading="lazy" width="900" height="285"><div class="bot"><h3>Scape tool</h3><span class="m">Blade + hook · 28 g</span></div></article>
     </div>
   </div>
+</section>
+
+<section class="kit" aria-label="The starter kit">
+  <img src="img/flatlay.webp" width="2400" height="1680" loading="lazy" alt="Every HAKO part laid out top-down on a pale surface: stones, soil tiles, pods, keys and the scape tool.">
+  <div class="cap m"><div><strong>Everything in the box.</strong>Stones · Tiles · Pods · Keys · Tool</div><span>Kit 01 · Fits a 40 cm cube</span></div>
 </section>
 
 <section aria-label="HAKO in numbers">
   <div class="nums">
-    <div class="num"><span class="code">50</span><span class="label">Millimetre grid, for every part</span></div>
-    <div class="num"><span class="code">01</span><span class="label">Joint, for every connection</span></div>
-    <div class="num"><span class="code">00</span><span class="label">Supports needed to print</span></div>
-    <div class="num"><span class="code">∞</span><span class="label">Layouts from the same stones</span></div>
+    <div class="num"><b>50<span class="it">mm</span></b><span class="m">One grid for every part</span></div>
+    <div class="num"><b>1</b><span class="m">Joint for every connection</span></div>
+    <div class="num"><b>0</b><span class="m">Grams of glue</span></div>
+    <div class="num"><b><span class="it">∞</span></b><span class="m">Layouts from the same stones</span></div>
   </div>
 </section>
 
-<section class="sec" aria-labelledby="h-maker">
-  <div class="wrap maker rv">
-    <span class="label" id="h-maker">05 · Built in the open</span>
-    <blockquote>“I wanted the calm of an iwagumi tank without being stuck with it forever. So I started printing my own landscape, one tile at a time.”</blockquote>
-    <div class="by"><svg class="mk" viewBox="-8 -8 60 60" fill="currentColor" fill-rule="evenodd" aria-hidden="true"><path d="M0 0H44V44H0Z M4.5 4.5V39.5H39.5V4.5Z M34.19 36.07L31.38 36.46L29.88 36.06L30.23 29.50L29.71 25.75L28.56 24.30L25.75 23.69L16.38 23.70L14.50 24.29L13.34 25.75L12.91 27.62L13.18 36.06L11.69 36.46L8.83 36.06L7.17 30.44L9.29 24.81L9.67 21.06L7.03 13.56L8.35 10.75L8.87 7.00L11.69 6.60L13.19 7.00L12.89 16.38L13.32 18.25L14.50 19.71L16.38 20.30L25.75 20.31L28.56 19.71L30.02 17.31L29.86 7.00L31.38 6.60L34.16 7.00L34.68 10.75L36.00 13.56L33.37 21.06L33.75 24.81L35.86 30.44L34.19 36.07Z"/></svg><span>Elian Rosswag · designing, printing and testing HAKO in the UK. Every print, failure and rescape goes online.</span></div>
-  </div>
-</section>
-
-<section class="paper sec wait" id="waitlist" aria-labelledby="h-wait">
-  <div class="wrap">
-    <div class="box rv">
-      <div>
-        <span class="label">First batch · Starter kit · Target £39</span>
-        <h2 id="h-wait" style="margin-top:18px">Join the first build.</h2>
-        <p>The first kits are printed by hand, in small batches. Leave your email and you will hear once, when they are ready.</p>
-      </div>
-      <form class="wform" id="wform" novalidate>
-        <label class="sr" for="email">Email address</label>
-        <div class="field">
-          <input id="email" name="email" type="email" autocomplete="email" placeholder="you@email.com" required>
-          <button class="btn btn-primary" type="submit">Join</button>
-        </div>
-        <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
-        <span class="label hint">One email when it ships. Nothing else.</span>
-        <span class="label ok" role="status">You are on the list. Speak soon.</span>
-        <span class="label err" role="alert">That didn't send. Check the address and try again.</span>
-      </form>
-    </div>
+<section class="wait" id="waitlist" aria-labelledby="h-wait">
+  <div class="w">
+    <span class="k m">04 · First build</span>
+    <h2 id="h-wait" class="rv">Join the <span class="it">first build.</span></h2>
+    <p class="sub rv">The first kits are printed by hand in small batches. Leave your email and you'll hear from us once, when they're ready. Target price £39.</p>
+    <form class="wf rv" id="wf" novalidate>
+      <label class="sr" for="email">Email address</label>
+      <div class="field"><input id="email" name="email" type="email" autocomplete="email" placeholder="you@email.com" required><button class="btn btn-moss" type="submit">Join <span class="ar">→</span></button></div>
+      <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <span class="hint m">One email when it ships. Nothing else.</span>
+      <span class="ok m" role="status">You're on the list. Speak soon.</span>
+      <span class="err m" role="alert">That didn't send. Check the address and try again.</span>
+    </form>
   </div>
 </section>
 </main>
 
 <footer>
-  <div class="wrap">
-    <div class="row"><svg class="wm-s" viewBox="0 0 1164 356" fill="currentColor" fill-rule="evenodd" role="img" aria-label="HAKO"><path d="M0 0h44v44h-44Z M208 0h44v44h-44Z M0 52h44v44h-44Z M208 52h44v44h-44Z M0 104h44v44h-44Z M208 104h44v44h-44Z M0 156h44v44h-44Z M52 156h44v44h-44Z M104 156h44v44h-44Z M156 156h44v44h-44Z M208 156h44v44h-44Z M0 208h44v44h-44Z M208 208h44v44h-44Z M0 260h44v44h-44Z M208 260h44v44h-44Z M0 312h44v44h-44Z M208 312h44v44h-44Z M356 0h44v44h-44Z M408 0h44v44h-44Z M460 0h44v44h-44Z M304 52h44v44h-44Z M512 52h44v44h-44Z M304 104h44v44h-44Z M512 104H556V148H512Z M519.7 111.7V140.3H548.3V111.7Z M304 156h44v44h-44Z M356 156h44v44h-44Z M408 156h44v44h-44Z M460 156H504V200H460Z M467.7 163.7V192.3H496.3V163.7Z M512 156H556V200H512Z M519.7 163.7V192.3H548.3V163.7Z M304 208h44v44h-44Z M512 208H556V252H512Z M519.7 215.7V244.3H548.3V215.7Z M304 260h44v44h-44Z M512 260h44v44h-44Z M304 312h44v44h-44Z M512 312h44v44h-44Z M608 0h44v44h-44Z M816 0h44v44h-44Z M608 52h44v44h-44Z M764 52h44v44h-44Z M608 104H652V148H608Z M615.7 111.7V140.3H644.3V111.7Z M712 104H756V148H712Z M719.7 111.7V140.3H748.3V111.7Z M608 156H652V200H608Z M615.7 163.7V192.3H644.3V163.7Z M660 156H704V200H660Z M667.7 163.7V192.3H696.3V163.7Z M608 208H652V252H608Z M615.7 215.7V244.3H644.3V215.7Z M712 208H756V252H712Z M719.7 215.7V244.3H748.3V215.7Z M608 260h44v44h-44Z M764 260h44v44h-44Z M608 312h44v44h-44Z M816 312h44v44h-44Z M964 0h44v44h-44Z M1016 0h44v44h-44Z M1068 0h44v44h-44Z M912 52h44v44h-44Z M1120 52h44v44h-44Z M912 104h44v44h-44Z M1120 104h44v44h-44Z M912 156h44v44h-44Z M1120 156h44v44h-44Z M912 208h44v44h-44Z M1120 208h44v44h-44Z M912 260h44v44h-44Z M1120 260h44v44h-44Z M964 312h44v44h-44Z M1016 312h44v44h-44Z M1068 312h44v44h-44Z"/></svg><span class="label">Landscapes, in modules.</span></div>
-    <div class="row"><a class="label" href="#system">System</a><a class="label" href="#parts">Parts</a><a class="label" href="#waitlist">Waitlist</a><a class="label" href="https://elian.ink">elian.ink</a></div>
+  <div class="w">
+    <div class="row"><svg class="wm-s" viewBox="0 0 1164 356" fill="currentColor" fill-rule="evenodd" role="img" aria-label="HAKO"><path d="M0 0h44v44h-44Z M208 0h44v44h-44Z M0 52h44v44h-44Z M208 52h44v44h-44Z M0 104h44v44h-44Z M208 104h44v44h-44Z M0 156h44v44h-44Z M52 156h44v44h-44Z M104 156h44v44h-44Z M156 156h44v44h-44Z M208 156h44v44h-44Z M0 208h44v44h-44Z M208 208h44v44h-44Z M0 260h44v44h-44Z M208 260h44v44h-44Z M0 312h44v44h-44Z M208 312h44v44h-44Z M356 0h44v44h-44Z M408 0h44v44h-44Z M460 0h44v44h-44Z M304 52h44v44h-44Z M512 52h44v44h-44Z M304 104h44v44h-44Z M512 104H556V148H512Z M519.7 111.7V140.3H548.3V111.7Z M304 156h44v44h-44Z M356 156h44v44h-44Z M408 156h44v44h-44Z M460 156H504V200H460Z M467.7 163.7V192.3H496.3V163.7Z M512 156H556V200H512Z M519.7 163.7V192.3H548.3V163.7Z M304 208h44v44h-44Z M512 208H556V252H512Z M519.7 215.7V244.3H548.3V215.7Z M304 260h44v44h-44Z M512 260h44v44h-44Z M304 312h44v44h-44Z M512 312h44v44h-44Z M608 0h44v44h-44Z M816 0h44v44h-44Z M608 52h44v44h-44Z M764 52h44v44h-44Z M608 104H652V148H608Z M615.7 111.7V140.3H644.3V111.7Z M712 104H756V148H712Z M719.7 111.7V140.3H748.3V111.7Z M608 156H652V200H608Z M615.7 163.7V192.3H644.3V163.7Z M660 156H704V200H660Z M667.7 163.7V192.3H696.3V163.7Z M608 208H652V252H608Z M615.7 215.7V244.3H644.3V215.7Z M712 208H756V252H712Z M719.7 215.7V244.3H748.3V215.7Z M608 260h44v44h-44Z M764 260h44v44h-44Z M608 312h44v44h-44Z M816 312h44v44h-44Z M964 0h44v44h-44Z M1016 0h44v44h-44Z M1068 0h44v44h-44Z M912 52h44v44h-44Z M1120 52h44v44h-44Z M912 104h44v44h-44Z M1120 104h44v44h-44Z M912 156h44v44h-44Z M1120 156h44v44h-44Z M912 208h44v44h-44Z M1120 208h44v44h-44Z M912 260h44v44h-44Z M1120 260h44v44h-44Z M964 312h44v44h-44Z M1016 312h44v44h-44Z M1068 312h44v44h-44Z"/></svg><span class="m">Landscapes, in modules.</span></div>
+    <div class="row m"><a href="#system">System</a><a href="#parts">Parts</a><a href="#waitlist">Waitlist</a><a href="https://elian.ink">elian.ink</a></div>
   </div>
 </footer>
 
 <script>
-// reveal on scroll
 (() => {
-  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -10% 0px' });
-  document.querySelectorAll('.rv').forEach(el => io.observe(el));
-})();
-// waitlist
-(() => {
-  const f = document.getElementById('wform');
+  const nav = document.getElementById('nav');
+  const onScroll = () => nav.classList.toggle('solid', scrollY > 40);
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('.rv').forEach((el, i) => { el.style.transitionDelay = (i % 4) * 70 + 'ms'; io.observe(el); });
+  const f = document.getElementById('wf');
   f.addEventListener('submit', async e => {
-    e.preventDefault();
-    f.classList.remove('fail');
+    e.preventDefault(); f.classList.remove('fail');
     const email = f.email.value.trim();
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { f.classList.add('fail'); f.email.focus(); return; }
     if (f._honey.value) return;
-    const btn = f.querySelector('button'); btn.disabled = true; btn.textContent = '…';
+    const b = f.querySelector('button'); b.disabled = true;
     try {
-      const r = await fetch('https://formsubmit.co/ajax/hello@elian.ink', {
-        method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({ email, _subject: 'HAKO waitlist: ' + email, _template: 'table', source: location.href })
-      });
-      if (!r.ok) throw new Error(r.status);
-      f.classList.add('done');
-    } catch (err) { f.classList.add('fail'); }
-    btn.disabled = false; btn.textContent = 'Join';
+      const r = await fetch('https://formsubmit.co/ajax/hello@elian.ink', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({ email, _subject: 'HAKO waitlist: ' + email, _template: 'table', source: location.href }) });
+      if (!r.ok) throw 0; f.classList.add('done');
+    } catch { f.classList.add('fail'); }
+    b.disabled = false;
   });
 })();
-</script>
-
-<script type="importmap">
-{ "imports": { "three": "./vendor/three.module.js",
-               "three/addons/": "./vendor/jsm/" } }
-</script>
-<script type="module">
-import * as THREE from 'three';
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-
-const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const loader = new GLTFLoader();
-const load = name => new Promise((res, rej) => loader.load(`models/${name}.glb`, g => res(g.scene), undefined, rej));
-
-const MAT = {
-  rock: new THREE.MeshStandardMaterial({ color: 0x575b56, roughness: .9, metalness: 0 }),
-  tile: new THREE.MeshStandardMaterial({ color: 0x7c807a, roughness: .85 }),
-  key:  new THREE.MeshStandardMaterial({ color: 0xc8cbc4, roughness: .7 }),
-  pod:  new THREE.MeshStandardMaterial({ color: 0x9a9d97, roughness: .8 }),
-};
-function dress(obj, mat) { obj.traverse(o => { if (o.isMesh) { o.material = mat; o.castShadow = true; o.receiveShadow = true; o.geometry.computeVertexNormals(); } }); return obj; }
-
-function makeView(host, { fov = 30 } = {}) {
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-  renderer.outputColorSpace = THREE.SRGBColorSpace;
-  renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-  host.prepend(renderer.domElement);
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(fov, 1, 1, 4000);
-  scene.add(new THREE.HemisphereLight(0xf4f3ee, 0x22251f, 1.5));
-  const key = new THREE.DirectionalLight(0xffffff, 2.6); key.position.set(220, 380, 260); key.castShadow = true;
-  key.shadow.mapSize.set(1024, 1024); Object.assign(key.shadow.camera, { left: -260, right: 260, top: 260, bottom: -260, near: 10, far: 1200 });
-  scene.add(key);
-  const rim = new THREE.DirectionalLight(0xc6f24e, .35); rim.position.set(-300, 120, -260); scene.add(rim);
-  const size = () => { const w = host.clientWidth, h = host.clientHeight; renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); };
-  new ResizeObserver(size).observe(host); size();
-  let visible = true;
-  new IntersectionObserver(([e]) => visible = e.isIntersecting).observe(host);
-  return { renderer, scene, camera, isVisible: () => visible };
-}
-
-function floor(scene, size = 600) {
-  const g = new THREE.GridHelper(size, size / 50, 0x2a2d2a, 0x1d1f1d); scene.add(g);
-  const s = new THREE.Mesh(new THREE.PlaneGeometry(size, size), new THREE.ShadowMaterial({ opacity: .45 }));
-  s.rotation.x = -Math.PI / 2; s.position.y = .2; s.receiveShadow = true; scene.add(s);
-}
-
-// ---------- hero: one stone, slowly turning, drag to rotate ----------
-(async () => {
-  const host = document.getElementById('hero-stage');
-  const v = makeView(host, { fov: 26 });
-  floor(v.scene, 500);
-  const stone = dress(await load('cliff'), MAT.rock);
-  const tile = dress(await load('tile'), MAT.tile);
-  const pivot = new THREE.Group(); pivot.add(tile); stone.position.y = 15; pivot.add(stone); v.scene.add(pivot);
-  v.camera.position.set(430, 300, 470); v.camera.lookAt(0, 72, 0);
-  let rot = -.6, vel = reduce ? 0 : .0028, drag = null;
-  host.addEventListener('pointerdown', e => { drag = e.clientX; host.setPointerCapture(e.pointerId); });
-  host.addEventListener('pointermove', e => { if (drag !== null) { rot += (e.clientX - drag) * .008; drag = e.clientX; } });
-  host.addEventListener('pointerup', () => drag = null);
-  host.style.cursor = 'grab'; host.style.touchAction = 'pan-y';
-  (function tick() {
-    requestAnimationFrame(tick);
-    if (!v.isVisible()) return;
-    if (drag === null) rot += vel;
-    pivot.rotation.y = rot;
-    v.renderer.render(v.scene, v.camera);
-  })();
-})().catch(console.error);
-
-// ---------- exploded view: scroll assembles the stack ----------
-(async () => {
-  const host = document.getElementById('x-stage');
-  const v = makeView(host, { fov: 24 });
-  floor(v.scene, 500);
-  const [tile, stone, pod] = await Promise.all([load('tile'), load('cliff'), load('pod')]);
-  dress(tile, MAT.tile); dress(stone, MAT.rock); dress(pod, MAT.pod);
-  const keyProto = dress(await load('key'), MAT.key);
-  const keys = new THREE.Group();
-  [[0, -48.5, 0], [0, 48.5, 0], [-48.5, 0, Math.PI / 2], [48.5, 0, Math.PI / 2]].forEach(([x, z, r]) => {
-    const k = keyProto.clone(); k.position.set(x, 0, z); k.rotation.y = r; keys.add(k);
-  });
-  const root = new THREE.Group(); root.add(tile, keys, stone, pod); v.scene.add(root);
-  root.rotation.y = -.7;
-  v.camera.position.set(620, 470, 700); v.camera.lookAt(0, 200, 0);
-  // assembled heights (y) and exploded offsets
-  const base = { tile: 0, keys: 2, stone: 15, pod: 125 };
-  const gap  = { tile: 0, keys: 46, stone: 104, pod: 250 };
-  const labels = { pod: [pod, 14], stone: [stone, 120], key: [keys, 6], tile: [tile, 6] };
-  const items = [...document.querySelectorAll('#parts-list li')];
-  const v3 = new THREE.Vector3();
-  let t = 1, target = 1;
-  const progress = () => {
-    const r = host.getBoundingClientRect(), vh = innerHeight;
-    const p = 1 - Math.min(1, Math.max(0, (vh * .5 - r.top) / (r.height * .9)));
-    target = reduce ? 1 : p;   // 1 = exploded, 0 = assembled
-  };
-  addEventListener('scroll', progress, { passive: true }); progress();
-  (function tick(ms) {
-    requestAnimationFrame(tick);
-    if (!v.isVisible()) return;
-    t += (target - t) * .08;
-    tile.position.y = base.tile;
-    keys.position.y = base.keys + gap.keys * t;
-    stone.position.y = base.stone + gap.stone * t;
-    pod.position.y = base.pod + gap.pod * t;
-    pod.position.x = 22 * t; pod.position.z = -22 * t;
-    if (!reduce) root.rotation.y = -.7 + Math.sin((ms || 0) / 4000) * .12;
-    v.renderer.render(v.scene, v.camera);
-    const w = host.clientWidth, h = host.clientHeight;
-    for (const [id, [obj, dy]] of Object.entries(labels)) {
-      obj.getWorldPosition(v3); v3.y += dy; v3.x += 70; v3.project(v.camera);
-      const el = document.getElementById('lb-' + id);
-      el.style.left = ((v3.x * .5 + .5) * w) + 'px';
-      el.style.top = ((-v3.y * .5 + .5) * h) + 'px';
-      el.style.opacity = Math.min(1, t * 1.6);
-    }
-  })();
-  items.forEach(li => {
-    li.addEventListener('mouseenter', () => items.forEach(o => o.classList.toggle('dim', o !== li)));
-    li.addEventListener('mouseleave', () => items.forEach(o => o.classList.remove('dim')));
-  });
-})().catch(console.error);
 </script>
 </body>
 </html>
