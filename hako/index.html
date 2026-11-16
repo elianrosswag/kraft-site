@@ -13,7 +13,6 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="img/mark.svg" type="image/svg+xml">
 <link rel="preload" href="fonts/host-grotesk-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="img/hero.webp" as="image">
 <link rel="modulepreload" href="vendor/three.module.js">
 <style>
 @font-face{font-family:Host;src:url(fonts/host-grotesk-latin-400-normal.woff2) format("woff2");font-weight:400;font-display:swap}
@@ -67,8 +66,8 @@ ol,ul{list-style:none;padding:0}
 /* hero */
 .hero{position:relative;height:100svh;min-height:680px;overflow:hidden;background:var(--basalt)}
 .hero .stage{position:absolute;inset:0;height:auto;min-height:0}
-.hero .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:68% 50%;transition:opacity 1s;pointer-events:none}
-.hero .stage.ready .bg{opacity:0}
+.hero .stage canvas{opacity:0;transition:opacity 1.2s ease .1s}
+.hero .stage.ready canvas{opacity:1}
 .hero::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:1;background:linear-gradient(90deg,rgba(14,15,14,.92) 0%,rgba(14,15,14,.55) 38%,rgba(14,15,14,0) 62%),linear-gradient(0deg,rgba(14,15,14,.85) 0%,rgba(14,15,14,0) 30%)}
 .hero .w{position:relative;z-index:2;pointer-events:none;height:100%;grid-template-columns:minmax(0,1fr);display:grid;grid-template-rows:auto 1fr auto;padding-top:104px;padding-bottom:40px}
 .corner{display:flex;justify-content:space-between;color:var(--faint)}
@@ -155,6 +154,18 @@ ol,ul{list-style:none;padding:0}
 .c-full{grid-column:1/-1}
 .c-full img{inset:20% 20% 24%;width:60%;height:56%}
 @media (max-width:900px){.bento{grid-template-columns:repeat(2,1fr);grid-auto-rows:240px}.parts .head{grid-template-columns:1fr}.parts .head .k,.parts .head h2,.parts .head p{grid-column:1}}
+
+/* sets */
+.sets{padding:0 0 clamp(96px,12vw,180px)}
+.sets .head{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--g);border-top:1px solid var(--pline);padding-top:28px;margin-bottom:clamp(40px,5vw,72px)}
+.sets .head .k{grid-column:1/span 3;color:var(--pmuted)}
+.sets .head h2{grid-column:4/span 6;font:500 clamp(36px,4.2vw,64px)/1 var(--sans);letter-spacing:-.04em}
+.sets .head p{grid-column:10/span 3;color:var(--pmuted);font-size:15px;align-self:end}
+.sets .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.sets .cell{height:clamp(360px,34vw,500px)}
+.sets .cell img{inset:16% 18% 18%;width:64%;height:66%}
+.sets .tag{color:var(--moss);background:var(--pink);padding:3px 6px}
+@media (max-width:900px){.sets .head{grid-template-columns:1fr}.sets .head .k,.sets .head h2,.sets .head p{grid-column:1}.sets .grid3{grid-template-columns:1fr}.sets .cell{height:420px}}
 
 /* kit */
 .kit{position:relative;background:var(--paper)}
@@ -265,7 +276,6 @@ footer a:hover{color:var(--ink)}
 <header class="hero">
   <div class="stage" id="stage">
     <div class="grid-bg"></div>
-    <img class="bg" src="img/hero.webp" width="2400" height="1800" alt="HAKO STONE-03, a faceted black cliff module with two plant sockets.">
   </div>
   <div class="w">
     <div class="corner m"><span>Modular aquascape system</span><span class="r">Prototype 06 · Made in the UK<i>Drag to turn</i></span></div>
@@ -368,6 +378,21 @@ footer a:hover{color:var(--ink)}
   </div>
 </section>
 
+<section class="paper sets" id="sets" aria-labelledby="h-sets">
+  <div class="w">
+    <div class="head">
+      <span class="k m rv">04 · Sets</span>
+      <h2 id="h-sets" class="rv">Same grid. <span class="it">A new landscape every set.</span></h2>
+      <p class="rv">Each set is printed in its own stone. Basalt comes first; the others are early renders of where it goes next. Every piece still locks to the same 50&nbsp;mm grid.</p>
+    </div>
+    <div class="grid3">
+      <article class="cell rv"><div class="top m"><span>Set 01</span><span class="tag">First build</span></div><img src="img/set-basalt.webp" alt="The cliff stone in dark basalt." loading="lazy" width="440" height="633"><div class="bot"><h3>Basalt</h3><span class="m">Dark, volcanic</span></div></article>
+      <article class="cell rv"><div class="top m"><span>Set 02</span><span>Concept render</span></div><img src="img/set-dune.webp" alt="The cliff stone in a warm sandstone finish with layered strata." loading="lazy" width="440" height="633"><div class="bot"><h3>Dune</h3><span class="m">Warm, layered sandstone</span></div></article>
+      <article class="cell rv"><div class="top m"><span>Set 03</span><span>Concept render</span></div><img src="img/set-ash.webp" alt="The cliff stone in a pale grey limestone finish." loading="lazy" width="440" height="633"><div class="bot"><h3>Ash</h3><span class="m">Pale, weathered limestone</span></div></article>
+    </div>
+  </div>
+</section>
+
 <section class="kit" aria-label="The starter kit">
   <img src="img/flatlay.webp" width="2400" height="1680" loading="lazy" alt="Every HAKO part laid out top-down on a pale surface: stones, soil tiles, pods, keys and the scape tool.">
   <div class="cap m"><div><strong>Everything in the box.</strong>Stones · Tiles · Pods · Keys · Tool</div><span>Kit 01 · Fits a 40 cm cube</span></div>
@@ -384,7 +409,7 @@ footer a:hover{color:var(--ink)}
 
 <section class="wait" id="waitlist" aria-labelledby="h-wait">
   <div class="w">
-    <span class="k m">04 · First build</span>
+    <span class="k m">05 · First build</span>
     <h2 id="h-wait" class="rv">Join the <span class="it">first build.</span></h2>
     <p class="sub rv">The first kits are printed by hand in small batches. Leave your email and you'll hear from us once, when they're ready. Target price £39.</p>
     <form class="wf rv" id="wf" novalidate>
